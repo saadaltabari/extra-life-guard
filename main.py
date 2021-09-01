@@ -1,6 +1,13 @@
 
 
 def _read_lifeguard_schedule_file(file_name: str) -> list:
+	"""
+	Read the lifeguard schedule form an input file.
+
+	:param file_name: str, the name of the file to read.
+	:return: list(tuple), a list of tuples representing every
+	lifeguard's start and end time, ordered by start date
+	"""
 	lifeguard_shifts = []
 	with open(file_name) as f:
 		lifeguard_count = int(f.readline())
@@ -12,6 +19,13 @@ def _read_lifeguard_schedule_file(file_name: str) -> list:
 
 
 def _compute_max_coverage(case_number: int) -> int:
+	"""
+	Calculate the maximum time that can be coverd by the lifeguards
+	if one of the life guards had to be fired.
+
+	:param case_number: int, the number of the input case to compute.
+	:return: int, representing the maximum time that can be covered.
+	"""
 	sorted_lifeguard_shifts = \
 		_read_lifeguard_schedule_file(file_name=f"files/input/{case_number}.in")
 	lifeguard_significances = []
@@ -41,15 +55,23 @@ def _compute_max_coverage(case_number: int) -> int:
 	return overall_coverage - least_significant
 
 
-def _write_output_file(result: str, file_name: str):
+def _write_output_file(output: str, file_name: str):
+	"""
+	Writes a single line of output to a file.
+
+	:param output: str, the output to write to the file
+	:param file_name: str, the output file's name
+	:return:
+	"""
 	file1 = open(file_name, 'w')
-	file1.write(result)
+	file1.write(output)
 	file1.close()
 
 
 if __name__ == '__main__':
+
 	for case in range(1, 11):
 		print(f"Computing case ({case})")
 		result = _compute_max_coverage(case)
-		_write_output_file(result=f"{result}", file_name=f"files/output/{case}.out")
+		_write_output_file(output=f"{result}", file_name=f"files/output/{case}.out")
 		print(f"Case ({case}) completed. See output file.")
