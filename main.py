@@ -1,14 +1,19 @@
 
-if __name__ == '__main__':
 
+def _read_lifeguard_schedule_file(file_name: str) -> list:
 	lifeguard_shifts = []
-	with open("files/input/1.in") as f:
+	with open(file_name) as f:
 		lifeguard_count = int(f.readline())
 		for lifeguard in range(0, lifeguard_count):
-			start, end = f.readline().split(" ")
-			lifeguard_shifts.append((int(start), int(end)))
+			shift_start, shift_end = f.readline().split(" ")
+			lifeguard_shifts.append((int(shift_start), int(shift_end)))
 
-	sorted_lifeguard_shifts = sorted(lifeguard_shifts, key=lambda shift: shift[0])
+	return sorted(lifeguard_shifts, key=lambda shift: shift[0])
+
+
+def _compute_max_coverage(case_number: int) -> int:
+	sorted_lifeguard_shifts = \
+		_read_lifeguard_schedule_file(file_name=f"files/input/{case_number}.in")
 	lifeguard_significances = []
 
 	pre_start, pre_end = sorted_lifeguard_shifts.pop(0)
@@ -33,8 +38,18 @@ if __name__ == '__main__':
 
 	lifeguard_significances.sort()
 	least_significant = lifeguard_significances.pop(0)
+	return overall_coverage - least_significant
 
-	file1 = open('files/output/1.out', 'w')
-	file1.write(f"{overall_coverage - least_significant}")
+
+def _write_output_file(result: str, file_name: str):
+	file1 = open(file_name, 'w')
+	file1.write(result)
 	file1.close()
-	print("execution completed")
+
+
+if __name__ == '__main__':
+	for case in range(1, 11):
+		print(f"Computing case ({case})")
+		result = _compute_max_coverage(case)
+		_write_output_file(result=f"{result}", file_name=f"files/output/{case}.out")
+		print(f"Case ({case}) completed. See output file.")
