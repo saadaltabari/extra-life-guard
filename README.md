@@ -1,4 +1,4 @@
-# Simple Recommendation
+# Extra Lifeguard
 
 Summer preparation, Data Structures assignment. This script calculates the maximum time a group of lifeguards can cover a swimming pool, if one of the lifeguards will be fired from their job.
 The script reads the schedules of lifeguards from an `.in` input file and outputs the maximum coverage that can be achieved to an `.out` output file. 
